@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular project</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/restangular/dist/restangular.min.js"></script>
+    <link rel="stylesheet" href="assets/css/core.css"/>
+
+</head>
+<body ng-app="myApp">
+<div class="main">
+    <section ng-controller="devCtrl" ng-init="response='Ok'">
+        <h1>Developers</h1>
+        <article>
+            <h2>Object:</h2>
+
+            <div class="code">people={{people}}</div>
+        </article>
+        <article>
+            <p>Initiated value: <span ng-bind="response"></span></p>
+
+            <h2>Nested <i>ng-repeat</i> for the same object:</h2>
+
+            <div ng-repeat="person in people">
+                <p ng-bind="person.name + ' ' + person.surname"></p>
+                <ul>
+                    <li ng-repeat="project in person.projects">
+                        <span ng-bind="project"></span>
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <article>
+            <h2>Binding with input field</h2>
+
+            <div class="code">developer={{developer}}</div>
+            Developer's name:
+
+            <ul>
+                <li>Unfiltered binding: <input type="text" name="person" ng-model="developer.name" value=""/>
+                    <span ng-bind="developer.name"></span></li>
+            </ul>
+        </article>
+        <article>
+            <h2>Format data with functions -> controller methods</h2>
+
+            <div>
+                Developer's details from function: <span ng-bind="fullDeveloper()"></span>
+            </div>
+        </article>
+        <article>
+            <h2><i>ng-repeat</i> with multiple properties:</h2>
+
+            <div class="code">otherDevelopers={{otherDevelopers}}</div>
+            <ul>
+                <li ng-repeat="dev in otherDevelopers">
+                    <p>{{dev.name}} {{dev.age}}</p>
+                </li>
+            </ul>
+
+        </article>
+        <aside>
+            <p>Use for adverts</p>
+        </aside>
+    </section>
+
+    <section ng-controller="politicsCtrl">
+        <h1>Polititians</h1>
+        <article>
+            <h2>Formatting in ng-repeat in the second controller</h2>
+
+            <h3>Filtering both input and resutls</h3>
+
+            <div class="code">politicians={{politicians}}</div>
+            Enter search criteria: <input type="text" ng-model="chooser"/>
+            <ul>
+                <li ng-repeat="politician in politicians | filter:chooser | orderBy:salary">
+                    <p>{{fullData(politician) | uppercase}}, salary : {{politician.salary|currency:"£":2}}</p>
+                </li>
+            </ul>
+        </article>
+    </section>
+    <section ng-controller="productsCtrl">
+        <h1>Products</h1>
+        <article>
+            <h2>Products - controlles with $http</h2>
+
+            <div>
+                Product search:
+                <input type="text" ng-model="productSearch"/>
+                <ul class="catalogue">
+                    <li class="product-container" ng-repeat="product in products|filter:productSearch|orderBy: name">
+                        <a href="{{product.url}}">
+                            <img src="https://www.design2taste.com/media/thumbnails/{{product.product_id}}.jpg" alt=""/><br/>
+                            {{product.name}}<br/>
+                        </a><br/>
+                        <span ng-bind="product.short_description"></span><br/>
+                        <span class="price">{{product.price|currency:"£":2}}</span>
+
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </section>
+    <footer>
+        <p>&copy; 2015 Mira Labs</p>
+    </footer>
+</div>
+<script src="app/app.js"></script>
+<script src="app/controllers/devCtrl.js"></script>
+<script src="app/controllers/politicsCtrl.js"></script>
+<script src="app/controllers/productsCtrl.js"></script>
+</body>
+</html>
