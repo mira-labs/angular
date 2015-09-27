@@ -90,19 +90,22 @@
         <h1>Products</h1>
         <article>
             <h2>Products - controlles with $http</h2>
-
             <div>
+                <label for="show-catalogue">Tick this box to show the catalog: </label><input id="show-catalogue" type="checkbox" ng-model="showCatalog"/>
+            </div>
+            <button ng-click="toggle()" ng-if="showCatalog">Hide catalogue</button>
+            <button ng-click="toggle()" ng-if="!showCatalog">Show catalogue</button>
+            <div ng-show="showCatalog">
                 Product search:
                 <input type="text" ng-model="productSearch"/>
                 <ul class="catalogue">
                     <li class="product-container" ng-repeat="product in products|filter:productSearch|orderBy: name">
                         <a href="{{product.url}}">
                             <img src="https://www.design2taste.com/media/thumbnails/{{product.product_id}}.jpg" alt=""/><br/>
-                            {{product.name}}<br/>
+                            {{$index + 1}}. {{product.name}}<br/>
                         </a><br/>
                         <span ng-bind="product.short_description"></span><br/>
                         <span class="price">{{product.price|currency:"£":2}}</span>
-
                     </li>
                 </ul>
             </div>
